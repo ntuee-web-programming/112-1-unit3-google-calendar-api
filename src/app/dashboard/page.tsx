@@ -35,9 +35,35 @@ export default function Dashboard() {
     };
     fetchCalendars();
   }, [accessToken, router]);
+
+  // See: https://developers.google.com/calendar/api/v3/reference/calendars/insert?hl=zh-tw
+  const handleAddCalendar = async () => {
+    const response = await fetch(
+      "https://www.googleapis.com/calendar/v3/calendars",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          summary: "Test Calendar",
+          description: "This calendar is added by Google Calendar API",
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    // Add the new calendar to the list
+    setCalendars((calendars) => [...calendars, data]);
+  };
+
   return (
     <div className="w-1/2 border p-4 m-4">
-      <h1 className="font-bold m-2">My Calendars</h1>
+      <div className="w-full flex justify-between p-2">
+        <h1 className="font-bold m-2">My Calendars</h1>
+        <button onClick={handleAddCalendar}>Add Calendar</button>
+      </div>
       <ul className="flex flex-col gap-2">
         {calendars.map((calendar, index) => (
           <li key={index} className="px-2 py-1 border flex gap-2 items-center">

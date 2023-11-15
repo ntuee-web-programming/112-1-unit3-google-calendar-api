@@ -2,7 +2,7 @@
 export default function GoogleOauthButton() {
   console.log(process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID);
   const clientId = process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID;
-  const redirectUri = "http://localhost:3000/oauth/google";
+  const redirectUri = "http://localhost:3000/api/auth/callback/google";
   const responseType = "code";
   const scope = [
     "https://www.googleapis.com/auth/calendar.readonly",
